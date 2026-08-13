@@ -1,0 +1,7 @@
+# MLX solo corre en Apple Silicon (macOS). En otra plataforma: usar torch (MPS/CPU).
+mlx>=0.18
+numpy>=1.26
+tokenizers>=0.20
+requests>=2.31
+tqdm>=4.66
+safetensors>=0.4
