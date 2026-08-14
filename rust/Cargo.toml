@@ -1,0 +1,23 @@
+[package]
+name = "yachay"
+version = "0.1.0"
+edition = "2021"
+description = "Inferencia del SLM Yachay en Rust puro (equipos viejos / IoT). Sin Python."
+license = "MIT"
+
+[[bin]]
+name = "yachay"
+path = "src/main.rs"
+
+[dependencies]
+# safetensors puro Rust para cargar los pesos entrenados con MLX
+safetensors = "0.4"
+# tokenizer BPE nativo (carga tokenizer.json, encode/decode ByteLevel)
+tokenizers = { version = "0.20", default-features = false, features = ["onig"] }
+serde_json = "1"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true

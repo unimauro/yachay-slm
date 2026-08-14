@@ -8,5 +8,8 @@ checkpoints/
 .env
 .DS_Store
 
+# Rust
+rust/target/
+
 # El modelo demo SÍ se versiona (para "clonar y correr"):
 !models/demo/

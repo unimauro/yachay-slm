@@ -66,6 +66,24 @@ los mismos pesos `.safetensors`. Solo depende de `numpy`, `safetensors` y
 Así puedes entrenar en una Mac y desplegar el cerebro en un juguete educativo o
 un equipo reciclado.
 
+### Rust: el binario para el dispositivo (aún más liviano)
+
+Para el despliegue final en IoT/embebido hay una implementación en **Rust puro**
+(`rust/`) que carga los mismos pesos y **no necesita Python en absoluto**:
+
+```bash
+cd rust && cargo build --release
+./target/release/yachay --chat
+./target/release/yachay --prompt "¿cuántos planetas hay?"
+```
+
+- Un **binario estático** de pocos MB: sin intérprete, sin `pip`, sin venv.
+- Cross-compila a ARM (Raspberry Pi, RK3588) con `cargo build --target ...`.
+- Verificado idéntico al motor de referencia (`scripts/check_parity_rust.py`).
+
+Regla práctica: **Python/MLX para entrenar y prototipar; Rust para desplegar**
+en el hardware chico.
+
 ## Estrategia de datos: destilación
 
 El demo entrena con los datos de `data/samples/general.jsonl` (incluidos, sin
@@ -128,9 +146,9 @@ notes/arquitectura.md     decisiones de arquitectura
 |---|---|---|
 | **1. PoC** ✅ | laptop (MLX) | tokenizer + nanoGPT + destilación + entrenar y ver que aprende |
 | **1b. Portátil** ✅ | cualquier CPU | motor NumPy, correr sin MLX (equipos viejos / IoT) |
+| **4. On-device** ✅ | Rust puro (`rust/`) | binario nativo sin Python; paridad verificada; cross-compila a ARM |
 | 2. Escala | GPU alquilada (si el PoC lo justifica) | más datos, más parámetros |
-| 3. Cuantizar | laptop | GGUF / 4-bit para inferencia más liviana |
-| 4. On-device | Rust `candle` / llama.cpp | binario único; cerebro en SoC (RK3588) |
+| 3. Cuantizar | laptop / Rust | int8 / 4-bit para inferencia aún más liviana |
 
 ## Licencia
 

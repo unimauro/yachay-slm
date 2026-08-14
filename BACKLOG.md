@@ -18,6 +18,13 @@
 - [ ] Probar en hardware real: Raspberry Pi / RK3588 / x86 viejo.
 - [ ] Tokenizer sin dependencia de `tokenizers` (Rust) para equipos muy limitados.
 
+## Fase 4 — Binario Rust (on-device, sin Python)  ✅
+- [x] Crate `rust/`: forward pass en Rust puro (safetensors + tokenizers).
+- [x] Paridad verificada Rust vs NumPy/MLX (`scripts/check_parity_rust.py`, ~1e-6).
+- [x] CLI `yachay --prompt / --chat`, fallback al modelo demo, muestreo top_k/temp/seed.
+- [ ] Cross-compilar y probar en ARM real (Raspberry Pi / RK3588) con `cross`.
+- [ ] Cuantización int8/4-bit en el binario para bajar RAM y tamaño.
+
 ## Fase 2+ (después)
 - [ ] Escalar a preset `micro`/`mini` (posible GPU alquilada).
 - [ ] Destilación por soft-labels/logits si el teacher lo permite.
