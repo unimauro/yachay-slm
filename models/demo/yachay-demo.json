@@ -1,0 +1,12 @@
+{
+  "preset": "nano",
+  "model": {
+    "vocab_size": 1421,
+    "block_size": 128,
+    "dim": 128,
+    "n_layers": 4,
+    "n_heads": 4,
+    "dropout": 0.1
+  },
+  "tokenizer": "models/demo/tokenizer.json"
+}

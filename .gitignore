@@ -3,6 +3,10 @@ __pycache__/
 *.pyc
 data/distill/*.jsonl
 checkpoints/
-tokenizer.json
+# tokenizer.json entrenado por el usuario (el del demo va en models/demo/)
+/tokenizer.json
 .env
 .DS_Store
+
+# El modelo demo SÍ se versiona (para "clonar y correr"):
+!models/demo/

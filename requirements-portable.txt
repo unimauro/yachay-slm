@@ -1,0 +1,7 @@
+# Inferencia PORTÁTIL (equipos viejos / IoT): NO requiere MLX ni GPU.
+# Corre en Raspberry Pi, x86 antiguo, RK3588, cualquier CPU con Python 3.9+.
+#   pip install -r requirements-portable.txt
+#   python -m src.portable.run --chat
+numpy>=1.24
+safetensors>=0.4
+tokenizers>=0.15

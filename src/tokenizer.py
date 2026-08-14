@@ -17,12 +17,14 @@ class TokenizerBPE:
 
     @staticmethod
     def entrenar(textos, vocab_size=8000, salida="tokenizer.json"):
-        from tokenizers import Tokenizer, models, trainers, pre_tokenizers
+        from tokenizers import Tokenizer, models, trainers, pre_tokenizers, decoders
         tk = Tokenizer(models.BPE(unk_token="<unk>"))
         tk.pre_tokenizer = pre_tokenizers.ByteLevel(add_prefix_space=True)
+        tk.decoder = decoders.ByteLevel()   # reconstruye texto legible al decodificar
         trainer = trainers.BpeTrainer(
             vocab_size=vocab_size,
             special_tokens=["<pad>", "<unk>", "<bos>", "<eos>"],
+            initial_alphabet=pre_tokenizers.ByteLevel.alphabet(),
         )
         tk.train_from_iterator(textos, trainer=trainer)
         tk.save(salida)

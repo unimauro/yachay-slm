@@ -1,13 +1,22 @@
 # Backlog — Yachay SLM
 
-## Fase 1 — PoC en laptop (MLX)
-- [ ] `pip install mlx` y verificar `python -m src.model` (forward + loss del batch de juguete).
-- [ ] Decidir el DOMINIO del primer SLM (STEM niños / expedientes UNI / legal).
-- [ ] Destilar dataset del teacher: `python -m src.distill --dominio "..."` (empezar con ~2000 pares).
-- [ ] Entrenar tokenizer BPE (`src.tokenizer`) y revisar vocab.
-- [ ] Correr `src.train` preset `nano`, ver que la loss baja.
-- [ ] `src.generate`: ¿produce texto del dominio con sentido?
-- [ ] Loop de evaluación (held-out) + métrica de perplejidad.
+## Fase 1 — PoC en laptop (MLX)  ✅ (verificado)
+- [x] `pip install mlx` y verificar `python -m src.model` (forward + loss del batch de juguete).
+- [x] Datos de ejemplo incluidos (`data/samples/general.jsonl`) para demo sin API.
+- [x] Entrenar tokenizer BPE (byte-level, con decoder) y revisar vocab.
+- [x] Correr `src.train` preset `nano`, ver que la loss baja (7.2 → 0.03).
+- [x] `src.generate` / `src.portable.run`: produce texto del dominio con sentido.
+- [x] Split de validación + val loss en el loop de entrenamiento.
+- [ ] Métrica de perplejidad explícita + corpus más grande (val loss aún alta por overfit).
+- [ ] Decidir/ampliar el DOMINIO del primer SLM serio (general amplio vs. nicho).
+
+## Fase 1b — Portabilidad (equipos viejos / IoT)  ✅
+- [x] Motor de inferencia en NumPy puro (`src/portable/`), sin MLX ni GPU.
+- [x] Paridad verificada MLX vs NumPy (`scripts/check_parity.py`, diff ~1e-6).
+- [x] Modelo demo pre-entrenado versionado (`models/demo/`) para "clonar y correr".
+- [x] `requirements-portable.txt` mínimo (numpy/safetensors/tokenizers).
+- [ ] Probar en hardware real: Raspberry Pi / RK3588 / x86 viejo.
+- [ ] Tokenizer sin dependencia de `tokenizers` (Rust) para equipos muy limitados.
 
 ## Fase 2+ (después)
 - [ ] Escalar a preset `micro`/`mini` (posible GPU alquilada).
