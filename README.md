@@ -23,11 +23,19 @@ Funciona en Linux/Windows/Mac, incluso en una Raspberry Pi. **No necesita MLX
 ni API key** — el repo trae un modelo demo pre-entrenado (~4.5 MB):
 
 ```bash
+git clone https://github.com/unimauro/yachay-slm.git
+cd yachay-slm
+
+python3 -m venv .venv && source .venv/bin/activate   # recomendado
 pip install -r requirements-portable.txt
-python -m src.portable.run --chat
+
+python -m src.portable.run --chat                    # chat interactivo
 # o una sola pregunta:
 python -m src.portable.run --prompt "¿por qué el cielo es azul?"
 ```
+
+> Escribe `salir` para terminar el chat. Si no activaste el venv, usa
+> `./.venv/bin/python` en lugar de `python`.
 
 > El demo es un modelo **diminuto** (~1M parámetros) entrenado sobre pocos
 > ejemplos: sirve para ver que el pipeline funciona, no para respuestas serias.
