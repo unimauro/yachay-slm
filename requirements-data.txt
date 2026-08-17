@@ -1,0 +1,4 @@
+# Solo para INGESTAR datasets de Hugging Face (src/hf_dataset.py).
+# No hace falta para entrenar ni para inferir.
+#   pip install -r requirements-data.txt
+datasets>=2.18
