@@ -59,6 +59,21 @@ python -m src.train --datos data/samples/general.jsonl --preset nano --max_steps
 python -m src.portable.run --chat
 ```
 
+## Dos tracks, dos objetivos
+
+El proyecto tiene **dos caminos complementarios** (porque "general + diminuto +
+desde cero" no coexisten — es física del modelo):
+
+| Track | Qué es | Para qué | Calidad |
+|---|---|---|---|
+| 🌱 **Yachay-Nano** (`src/`) | modelo **desde cero**, propio y diminuto | IoT chico / juguetes de **nicho** | domina un dominio acotado |
+| 🧠 **Yachay-General** (`finetune/`) | **afinar** (LoRA) un modelo chico preentrenado (Qwen2.5-0.5B) | asistente **general** en Raspberry Pi / PC vieja | multifuncional, útil de verdad |
+
+Un modelo diminuto desde cero **habla pero no sabe** (aprende gramática, no
+hechos). Para un asistente general con pocos parámetros, la ruta realista es
+**partir de un preentrenado y afinarlo** — sigue siendo abierto y tuyo, corre en
+hardware modesto, pero ya no es "desde cero". Ver **[finetune/README.md](finetune/README.md)**.
+
 ## La "capa para equipos viejos" (portabilidad)
 
 El entrenamiento usa **MLX** (solo Apple Silicon), pero la **inferencia** vive

@@ -11,5 +11,10 @@ checkpoints/
 # Rust
 rust/target/
 
+# Fine-tune: datos regenerables y checkpoints intermedios (el adapter final SÍ se versiona)
+finetune/data/
+finetune/adapters/*_adapters.safetensors
+finetune/yachay-general/
+
 # El modelo demo SÍ se versiona (para "clonar y correr"):
 !models/demo/

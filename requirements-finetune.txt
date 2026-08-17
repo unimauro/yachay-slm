@@ -1,0 +1,5 @@
+# Track "Yachay-General": afinar (LoRA) un modelo chico preentrenado en tu Mac.
+# Solo Apple Silicon (usa MLX). No hace falta para el track "desde cero".
+#   pip install -r requirements-finetune.txt
+mlx-lm>=0.31
+datasets>=2.18
