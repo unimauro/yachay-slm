@@ -10,6 +10,8 @@ MLX, sin PyTorch.
 No busca competir con GPT. Busca un modelo **propio, abierto, chico y
 ejecutable on-device**. Soberanía, privacidad y costo — no ranking.
 
+📍 **Roadmap del proyecto:** [ROADMAP.md](ROADMAP.md) · [versión visual](https://claude.ai/code/artifact/93c7014e-fca2-4320-b07f-a29f0f66cadf)
+
 ```
 Entrenas en Mac (rápido, con MLX)  ──►  .safetensors  ──►  corre en cualquier CPU (NumPy)
                                                              Raspberry Pi · x86 viejo · RK3588 · IoT
