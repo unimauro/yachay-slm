@@ -19,6 +19,9 @@ Entrenas en Mac (rápido, con MLX)  ──►  .safetensors  ──►  corre en
 
 ## Empezar en 2 minutos
 
+> 🖥️ **¿Windows, Linux o macOS?** Guía de instalación por sistema operativo en
+> **[RUN.md](RUN.md)** (ejecutar funciona en los tres; entrenar es solo Mac).
+
 ### A) Solo probar el modelo demo incluido (cualquier equipo, sin GPU)
 
 Funciona en Linux/Windows/Mac, incluso en una Raspberry Pi. **No necesita MLX
