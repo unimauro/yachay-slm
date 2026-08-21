@@ -21,6 +21,8 @@ def main():
     ap.add_argument("--temp", type=float, default=0.8)
     ap.add_argument("--top_k", type=int, default=40)
     ap.add_argument("--seed", type=int, default=None)
+    ap.add_argument("--collapse-digits", action="store_true",
+                    help="une dígitos separados (para modelos de matemática)")
     args = ap.parse_args()
 
     ckpt = args.ckpt
@@ -34,7 +36,8 @@ def main():
           f"vocab {m.W['tok_emb.weight'].shape[0]} | NumPy puro]")
 
     def responder(p):
-        return m.responder(p, args.max_new, args.temp, args.top_k, args.seed)
+        return m.responder(p, args.max_new, args.temp, args.top_k, args.seed,
+                           collapse_digits=args.collapse_digits)
 
     if args.chat:
         print("Modo chat. Escribe 'salir' para terminar.")

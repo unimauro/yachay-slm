@@ -2,9 +2,11 @@
 __pycache__/
 *.pyc
 data/distill/*.jsonl
+data/nano/*.jsonl
 checkpoints/
-# tokenizer.json entrenado por el usuario (el del demo va en models/demo/)
+# tokenizers entrenados por el usuario (regenerables; el del demo va en models/demo/)
 /tokenizer.json
+/tokenizer_math.json
 .env
 .DS_Store
 

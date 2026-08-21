@@ -120,7 +120,8 @@ class GPTNumpy:
                 break
         return ids
 
-    def responder(self, prompt, max_new_tokens=120, temperature=0.8, top_k=40, seed=None):
+    def responder(self, prompt, max_new_tokens=120, temperature=0.8, top_k=40,
+                  seed=None, collapse_digits=False):
         rng = np.random.default_rng(seed)
         eos_id = None
         try:
@@ -130,6 +131,12 @@ class GPTNumpy:
         start = self.tok.encode(f"<bos>{prompt}\n")
         out = self.generate(start, max_new_tokens, temperature, top_k, eos_id, rng)
         texto = self.tok.decode(out)
+        if collapse_digits:
+            # Une dígitos que el tokenizer de matemática separa ('1 1 8' -> '118')
+            # y aprieta espacios dobles (cosmético).
+            import re
+            texto = re.sub(r"(?<=\d)\s+(?=\d)", "", texto)
+            texto = re.sub(r"[ \t]{2,}", " ", texto)
         return texto
 
 

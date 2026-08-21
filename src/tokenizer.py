@@ -16,10 +16,16 @@ class TokenizerBPE:
         self.tk = tk
 
     @staticmethod
-    def entrenar(textos, vocab_size=8000, salida="tokenizer.json"):
+    def entrenar(textos, vocab_size=8000, salida="tokenizer.json", split_digits=False):
         from tokenizers import Tokenizer, models, trainers, pre_tokenizers, decoders
         tk = Tokenizer(models.BPE(unk_token="<unk>"))
-        tk.pre_tokenizer = pre_tokenizers.ByteLevel(add_prefix_space=True)
+        byte = pre_tokenizers.ByteLevel(add_prefix_space=True)
+        if split_digits:
+            # Cada dígito es su propio token: clave para que el modelo aprenda a calcular.
+            tk.pre_tokenizer = pre_tokenizers.Sequence(
+                [pre_tokenizers.Digits(individual_digits=True), byte])
+        else:
+            tk.pre_tokenizer = byte
         tk.decoder = decoders.ByteLevel()   # reconstruye texto legible al decodificar
         trainer = trainers.BpeTrainer(
             vocab_size=vocab_size,
@@ -62,5 +68,8 @@ if __name__ == "__main__":
     ap.add_argument("--entrena", required=True, help="JSONL de datos destilados")
     ap.add_argument("--vocab", type=int, default=8000)
     ap.add_argument("--salida", default="tokenizer.json")
+    ap.add_argument("--split-digits", action="store_true",
+                    help="separa cada dígito (recomendado para nichos de matemática)")
     args = ap.parse_args()
-    TokenizerBPE.entrenar(_iter_textos(args.entrena), args.vocab, args.salida)
+    TokenizerBPE.entrenar(_iter_textos(args.entrena), args.vocab, args.salida,
+                          split_digits=args.split_digits)
