@@ -1,6 +1,6 @@
 # Roadmap — Yachay SLM
 
-> 🌐 **Versión visual y compartible:** https://claude.ai/code/artifact/93c7014e-fca2-4320-b07f-a29f0f66cadf
+> 🌐 **Sitio web (GitHub Pages):** https://unimauro.github.io/yachay-slm/
 
 **Tesis:** entrenar en una laptop, correr en un juguete. Un modelo propio,
 abierto, que cabe donde ningún otro entra. Soberanía, privacidad y costo — no
@@ -31,7 +31,7 @@ Leyenda: ✅ hecho · 🔨 en curso · 🔭 horizonte · dificultad 🟢 baja / 
 | 4 | Datos de dominio | 🔭 | destilación dirigida + datasets HF por dominio (STEM, legal, etc.) | un juguete = un dominio · calidad alta donde importa 🟡 |
 | 5 | Aplicaciones con RAG local | 🔭 | extensión de Chrome + add-in de Office con **RAG local** sobre tus documentos, 100% en tu máquina | índice local · privacidad total · asistente sobre tu propia info 🟡 |
 | 6 | Comunidad y registro | 🔭 | aportes de datos de la comunidad → reentrenar barato → redistribuir | datos comunitarios → modelo mejorado, publicado en registro abierto 🟢 |
-| 7 | Red descentralizada | 🔭 | nodos de la comunidad sirviendo respuestas (estilo *Petals*) | inferencia distribuida · cerebros repartidos 🔴 |
+| 7 | Napster para modelos (red P2P) | 🔭 | usar la **CPU/GPU ociosa** de la comunidad para **entrenar y servir** el modelo, distribuido y **controlado** por un coordinador | cómputo ocioso → entrenamiento P2P → modelo de todos 🔴 |
 | 8 | El cerebro de Toki | 🔭 | integrar el SLM en juguetes educativos / IoT como cerebro on-device | SoC (RK3588) · binario único · sin nube, sin costo por token 🔴 |
 
 ## La idea grande: de un modelo propio a una red de la comunidad
@@ -42,12 +42,17 @@ respuestas. Aterrizado del más barato al más ambicioso:
 1. **Datos comunitarios** — aportar/curar pares de calidad. Barato, empieza ya.
 2. **Registro de modelos** — publicar cada versión para bajar y correr.
 3. **Inferencia distribuida** — nodos respondiendo consultas.
-4. **Entrenamiento descentralizado** — repartido entre voluntarios. Horizonte lejano.
+4. **Entrenamiento descentralizado — «Napster para modelos»** — aprovechar la
+   CPU/GPU ociosa de voluntarios para entrenar el modelo de forma distribuida y
+   **controlada** (un coordinador orquesta, los nodos aportan cómputo). Como
+   Napster compartía archivos, pero para entrenar un LLM abierto.
 
-**Honestidad de alcance:** para SLMs diminutos, descentralizar el *entrenamiento*
-aporta poco (la gracia es que corren enteros en una máquina chica). El valor que
-sí llega pronto es 1–2: **datos de la comunidad → reentrenar barato →
-redistribuir**. Eso ya es contribuir de verdad.
+**Honestidad de alcance:** la fase 4 es la más difícil (investigación pura), pero
+**ya se ha hecho** — *hivemind / DiLoCo*, *Petals* (inferencia distribuida),
+*INTELLECT-1* (entrenado de forma descentralizada). Es un precedente honesto, no
+una promesa. Para SLMs diminutos aporta poco (corren enteros en una máquina
+chica); tiene sentido cuando el modelo crece. El valor que sí llega **pronto** es
+1–2: **datos de la comunidad → reentrenar barato → redistribuir**.
 
 ## Cómo contribuir
 
