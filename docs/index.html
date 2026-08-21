@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://unimauro.github.io/yachay-slm/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2312141C'/%3E%3Cpath d='M16 4 L28 16 L16 28 L4 16 Z' fill='none' stroke='%23E4AC42' stroke-width='2.2'/%3E%3Cpath d='M16 11 L21 16 L16 21 L11 16 Z' fill='%2341BCA7'/%3E%3C/svg%3E">
 <meta property="og:title" content="Yachay SLM">
-<meta property="og:description" content="Modelo de lenguaje propio, abierto, on-device. Entrena en una laptop, corre en un juguete.">
+<meta property="og:description" content="Un LLM propio para PCs antiguas. Modelo de lenguaje abierto, on-device: entrena en una laptop, corre en una PC antigua.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://unimauro.github.io/yachay-slm/">
 <meta property="og:image" content="https://unimauro.github.io/yachay-slm/og-image.png">
@@ -18,6 +18,35 @@
 <meta name="twitter:title" content="Yachay SLM">
 <meta name="twitter:description" content="Un modelo de lenguaje propio, desde cero, que corre en hardware viejo e IoT.">
 <meta name="twitter:image" content="https://unimauro.github.io/yachay-slm/og-image.png">
+<!-- SEO / indexación -->
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="googlebot" content="index, follow">
+<meta name="keywords" content="SLM, small language model, LLM, modelo de lenguaje, LLM para PC antiguas, on-device AI, edge AI, IoT, Raspberry Pi, RK3588, MLX, NumPy, Rust, llama.cpp, GGUF, LoRA, fine-tuning, nanoGPT, open source, código abierto, Perú, Yachay, quechua">
+<meta name="author" content="Carlos Mauro Cárdenas Fernández">
+<meta name="theme-color" content="#12141C">
+<meta name="language" content="es">
+<meta property="og:locale" content="es_PE">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="pt_BR">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:site_name" content="Yachay SLM">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"SoftwareSourceCode",
+  "name":"Yachay SLM",
+  "alternateName":"Yachay Small Language Model",
+  "description":"Un LLM propio para PCs antiguas: modelo de lenguaje abierto, desde cero, que se entrena en una laptop y corre on-device en hardware modesto.",
+  "url":"https://unimauro.github.io/yachay-slm/",
+  "codeRepository":"https://github.com/unimauro/yachay-slm",
+  "programmingLanguage":["Python","Rust"],
+  "runtimePlatform":["macOS","Linux","Windows","Raspberry Pi"],
+  "license":"https://opensource.org/licenses/MIT",
+  "inLanguage":["es","en","zh","pt","qu"],
+  "keywords":"SLM, LLM, on-device, edge AI, IoT, PC antiguas, MLX, Rust, GGUF, open source, Perú",
+  "author":{"@type":"Person","name":"Carlos Mauro Cárdenas Fernández","email":"carlos@cardenas.pe","url":"https://github.com/unimauro"}
+}
+</script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RMVW69Z7VZ"></script>
 <script>
@@ -325,7 +354,7 @@
     </div>
     <h1>Yachay&nbsp;SLM</h1>
     <p class="quechua" data-i18n="quechua">yachay — «conocimiento, aprender» (quechua)</p>
-    <p class="thesis" data-i18n="thesis">Entrena en una laptop. Corre en un <b>juguete</b>. Un modelo propio, abierto, que cabe donde ningún otro entra.</p>
+    <p class="thesis" data-i18n="thesis">Entrena en una laptop. Corre en una <b>PC antigua</b>. Un modelo propio, abierto, que cabe donde ningún otro entra.</p>
     <div class="chips">
       <span class="chip" data-i18n="chip_tracks"><b>2</b> tracks</span>
       <span class="chip" data-i18n="chip_gpu">corre <b>sin GPU</b></span>
@@ -577,7 +606,7 @@
       qu_note:"Quechua translation in progress — help us improve it.",
       hero_eyebrow:"Your own language model · from scratch · made in Peru",
       quechua:"yachay — “knowledge, to learn” (Quechua)",
-      thesis:"Train it on a laptop. Run it on a <b>toy</b>. A model you own, open, that fits where no other can.",
+      thesis:"Train it on a laptop. Run it on an <b>old PC</b>. A model you own, open, that fits where no other can.",
       chip_tracks:"<b>2</b> tracks", chip_gpu:"runs <b>without a GPU</b>", chip_rag:"<b>local RAG</b> · private", chip_mit:"<b>MIT</b> license",
       why_eyebrow:"Why", why_h2:"Sovereignty, privacy and cost — not ranking",
       why_p:"It doesn't try to beat GPT. It's a small brain you can <b>own</b>, audit and run on-device: on tiny infrastructure, recycled hardware and educational toys. A tiny model doesn't know everything — but it can be yours, and reach where the big ones can't.",
@@ -625,7 +654,7 @@
       qu_note:"克丘亚语翻译进行中 —— 欢迎帮助改进。",
       hero_eyebrow:"自己的语言模型 · 从零构建 · 秘鲁制造",
       quechua:"yachay —«知识、学习»（克丘亚语）",
-      thesis:"在笔记本上训练，在<b>玩具</b>上运行。一个属于你的、开源的模型，能装进别人进不去的地方。",
+      thesis:"在笔记本上训练，在<b>老旧电脑</b>上运行。一个属于你的、开源的模型，能装进别人进不去的地方。",
       chip_tracks:"<b>2</b> 条路线", chip_gpu:"<b>无需 GPU</b> 运行", chip_rag:"<b>本地 RAG</b> · 隐私", chip_mit:"<b>MIT</b> 许可",
       why_eyebrow:"为什么", why_h2:"主权、隐私与成本 —— 不是排行榜",
       why_p:"它不与 GPT 竞争。它是一个你可以<b>拥有</b>、审计并在设备端运行的小脑：跑在小型基础设施、回收硬件和教育玩具上。小模型并非无所不知——但它可以属于你，去到大模型到不了的地方。",
@@ -673,7 +702,7 @@
       qu_note:"Tradução para o quíchua em andamento — ajude a melhorar.",
       hero_eyebrow:"Modelo de linguagem próprio · do zero · feito no Peru",
       quechua:"yachay — «conhecimento, aprender» (quíchua)",
-      thesis:"Treine num laptop. Rode num <b>brinquedo</b>. Um modelo próprio, aberto, que cabe onde nenhum outro entra.",
+      thesis:"Treine num laptop. Rode num <b>PC antigo</b>. Um modelo próprio, aberto, que cabe onde nenhum outro entra.",
       chip_tracks:"<b>2</b> trilhas", chip_gpu:"roda <b>sem GPU</b>", chip_rag:"<b>RAG local</b> · privado", chip_mit:"licença <b>MIT</b>",
       why_eyebrow:"Por quê", why_h2:"Soberania, privacidade e custo — não ranking",
       why_p:"Não busca competir com o GPT. É um cérebro pequeno que você pode <b>possuir</b>, auditar e rodar on-device: em infraestrutura pequena, hardware reciclado e brinquedos educativos. Um modelo minúsculo não sabe tudo — mas pode ser seu, e chegar onde os grandes não chegam.",
@@ -721,7 +750,7 @@
       qu_note:"Kay t'ikray runasimiman llamk'ashallanraqmi ✍️ — yanapaykuwaychis allinchayta.",
       hero_eyebrow:"Kikinpa siminchik modelo · qallariymanta · Perú suyupi ruwasqa",
       quechua:"yachay — «yachay, yachakuy» (runasimi)",
-      thesis:"Laptoppi yachachiy. Pukllanapi purichiy. Kikinpa modelo, kicharisqa, maypin mana hukkuna haykunmanchu chaypi haykun.",
+      thesis:"Laptoppi yachachiy. Mawk'a computadorapi purichiy. Kikinpa modelo, kicharisqa, maypin mana hukkuna haykunmanchu chaypi haykun.",
       chip_tracks:"<b>2</b> ñan", chip_gpu:"<b>mana GPU-yuq</b> purin", chip_rag:"<b>RAG local</b> · pakasqa", chip_mit:"<b>MIT</b> licencia",
       why_eyebrow:"Imarayku", how_eyebrow:"Imayna",
       why_h2:"Kikinchakuy, pakasqa kay, chaninpas — mana pujllay p'anqachu",

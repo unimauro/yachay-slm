@@ -2,7 +2,7 @@
 
 > 🌐 **Sitio web (GitHub Pages):** https://unimauro.github.io/yachay-slm/
 
-**Tesis:** entrenar en una laptop, correr en un juguete. Un modelo propio,
+**Tesis:** entrenar en una laptop, correr en una PC antigua. Un modelo propio,
 abierto, que cabe donde ningún otro entra. Soberanía, privacidad y costo — no
 ranking.
 
