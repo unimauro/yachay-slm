@@ -29,6 +29,14 @@ Precisión en test held-out (números nunca vistos): **suma 94% · división 96%
 multiplicación 92% · resta 85%**. Reproducible: `src/gen_math.py` (datos) +
 `src/train.py` + `src/eval_math.py`. Es el primer ladrillo del track Nano.
 
+**🎙️ Con voz (escuchar + hablar):** conecta piezas locales al cerebro —
+Whisper (STT) + Piper/`say` (TTS). Un tutor que oye la pregunta y responde
+hablando, todo on-device. Ver **[voz/README.md](voz/README.md)**.
+
+```bash
+python -m voz.talk --text "¿cuánto es 347 más 285?" --tts say
+```
+
 ```
 Entrenas en Mac (rápido, con MLX)  ──►  .safetensors  ──►  corre en cualquier CPU (NumPy)
                                                              Raspberry Pi · x86 viejo · RK3588 · IoT

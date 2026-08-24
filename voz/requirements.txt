@@ -1,0 +1,6 @@
+# Capa de voz de Yachay. Todo local; el cerebro es tu propio modelo.
+faster-whisper>=1.0     # STT (voz -> texto), corre en CPU
+# Micrófono en vivo (opcional; para --live):
+sounddevice>=0.4
+soundfile>=0.12
+# TTS: Piper es un binario aparte (ver voz/README.md). En macOS se puede usar 'say'.
