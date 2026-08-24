@@ -12,6 +12,23 @@ ejecutable on-device**. Soberanía, privacidad y costo — no ranking.
 
 📍 **Roadmap del proyecto:** [sitio web](https://unimauro.github.io/yachay-slm/) · [ROADMAP.md](ROADMAP.md)
 
+### 🌱 Primer modelo 100% propio: Yachay-Nano de matemática
+
+Un modelo **desde cero, soberano** (arquitectura propia + datos generados por
+código, sin Qwen ni GPT), que hace **aritmética al 91.5%** con solo **0.87M
+parámetros** y corre en cualquier CPU:
+
+```bash
+python -m src.portable.run --ckpt models/nano-math/yachay-math.safetensors \
+    --collapse-digits --chat
+# > ¿Cuánto es 347 más 285?
+#   347 + 285 = 632.
+```
+
+Precisión en test held-out (números nunca vistos): **suma 94% · división 96% ·
+multiplicación 92% · resta 85%**. Reproducible: `src/gen_math.py` (datos) +
+`src/train.py` + `src/eval_math.py`. Es el primer ladrillo del track Nano.
+
 ```
 Entrenas en Mac (rápido, con MLX)  ──►  .safetensors  ──►  corre en cualquier CPU (NumPy)
                                                              Raspberry Pi · x86 viejo · RK3588 · IoT

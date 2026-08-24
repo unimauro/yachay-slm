@@ -13,7 +13,9 @@ el proyecto avanza en dos caminos complementarios:
 
 - 🌱 **Yachay-Nano** (`src/`, `rust/`) — modelo **desde cero**, propio y diminuto
   (~1–7M). Domina un **nicho** acotado y cabe en el hardware más chico (IoT,
-  microcontroladores, juguetes de propósito único).
+  microcontroladores, PCs antiguas). **Primer modelo real:** Nano de matemática,
+  **91.5%** de precisión con 0.87M params, datos 100% autogenerados
+  (`models/nano-math/`).
 - 🧠 **Yachay-General** (`finetune/`) — **afinar** (LoRA) un modelo chico
   preentrenado (Qwen2.5-0.5B). Multifuncional de verdad, corre en Raspberry Pi /
   PC vieja. Sigue siendo abierto y tuyo, pero no «desde cero».
