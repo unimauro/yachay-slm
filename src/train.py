@@ -51,6 +51,7 @@ def main():
     ap.add_argument("--tokenizer", default="tokenizer.json")
     ap.add_argument("--preset", default="nano", choices=list(PRESETS))
     ap.add_argument("--max_steps", type=int, default=None, help="sobreescribe el preset")
+    ap.add_argument("--block_size", type=int, default=None, help="contexto (sobreescribe el preset)")
     ap.add_argument("--batch_size", type=int, default=None)
     ap.add_argument("--lr", type=float, default=None)
     ap.add_argument("--out", default="checkpoints/yachay.safetensors")
@@ -66,6 +67,8 @@ def main():
         tcfg.lr = args.lr
 
     mcfg = PRESETS[args.preset]
+    if args.block_size is not None:
+        mcfg.block_size = args.block_size
     np.random.seed(tcfg.seed)
     mx.random.seed(tcfg.seed)
 

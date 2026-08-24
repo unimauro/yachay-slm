@@ -37,6 +37,25 @@ hablando, todo on-device. Ver **[voz/README.md](voz/README.md)**.
 python -m voz.talk --text "¿cuánto es 347 más 285?" --tts say
 ```
 
+### 🎓 Nivel 2 — matemática universitaria EXACTA (traduce → SymPy)
+
+Para cálculo/álgebra el modelo **no calcula** (un modelo chico no puede) — el
+modelo **traduce** el problema a código SymPy, y **SymPy lo resuelve exacto**.
+Derivadas, integrales, límites, ecuaciones, factorización… nivel UNI, 100% local.
+
+```bash
+pip install -r requirements-mate.txt      # sympy
+python -m src.mate --prompt "Deriva x^3*sen(x) respecto a x."
+#   SymPy:  diff(x**3*sin(x), x)
+#   =       x**3*cos(x) + 3*x**2*sin(x)
+python -m src.mate --chat
+```
+
+**97.3%** de respuestas exactas en test held-out. El modelo traductor es tuyo
+(`models/nano-sympy/`, 0.87M params); el cálculo lo hace SymPy (exacto siempre).
+Es el patrón "cerebro chico + herramienta abierta" — la vía realista y soberana
+para llegar a nivel universitario.
+
 ```
 Entrenas en Mac (rápido, con MLX)  ──►  .safetensors  ──►  corre en cualquier CPU (NumPy)
                                                              Raspberry Pi · x86 viejo · RK3588 · IoT

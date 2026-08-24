@@ -1,0 +1,2 @@
+# Nivel 2 (mate UNI exacta): el modelo traduce y SymPy calcula.
+sympy>=1.12

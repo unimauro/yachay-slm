@@ -15,7 +15,9 @@ el proyecto avanza en dos caminos complementarios:
   (~1–7M). Domina un **nicho** acotado y cabe en el hardware más chico (IoT,
   microcontroladores, PCs antiguas). **Primer modelo real:** Nano de matemática,
   **91.5%** de precisión con 0.87M params, datos 100% autogenerados
-  (`models/nano-math/`).
+  (`models/nano-math/`). **Nivel 2 (mate UNI):** el Nano traduce a SymPy y este
+  calcula exacto — **97.3%** de respuestas correctas (`models/nano-sympy/`).
+  Además: capa de **voz** (Whisper + Piper) para escuchar y hablar (`voz/`).
 - 🧠 **Yachay-General** (`finetune/`) — **afinar** (LoRA) un modelo chico
   preentrenado (Qwen2.5-0.5B). Multifuncional de verdad, corre en Raspberry Pi /
   PC vieja. Sigue siendo abierto y tuyo, pero no «desde cero».
