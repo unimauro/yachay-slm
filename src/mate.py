@@ -69,6 +69,7 @@ def resolver_problema(problema, m=None):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--prompt")
+    ap.add_argument("--imagen", help="lee el enunciado desde una foto (OCR) y lo resuelve")
     ap.add_argument("--chat", action="store_true")
     ap.add_argument("--modelo", action="store_true",
                     help="usar el modelo neuronal (experimento) en vez del traductor determinista")
@@ -98,10 +99,19 @@ def main():
                 break
             if p:
                 print(responder(p))
+    elif args.imagen:
+        from .ocr import leer, corregir_exponentes
+        enunciado = leer(args.imagen)
+        print(f"  OCR:    {enunciado}")
+        corregido, hubo = corregir_exponentes(enunciado)
+        if hubo:
+            print(f"  ⚠ corr: {corregido}   (heurística '*'→'^' del OCR; verifica)")
+            enunciado = corregido
+        print(responder(enunciado))
     elif args.prompt:
         print(responder(args.prompt))
     else:
-        raise SystemExit("Da --prompt o --chat")
+        raise SystemExit("Da --prompt, --imagen o --chat")
 
 
 if __name__ == "__main__":

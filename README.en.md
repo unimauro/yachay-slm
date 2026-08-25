@@ -85,6 +85,21 @@ python -m src.eval_sympy --modelo   # neural model → 99.1% (experiment)
 **📈 Plots:** `python -m src.mate --prompt "grafica x^2 - 4"` draws the function
 with matplotlib and marks the **exact roots** (computed by SymPy).
 
+**📷 OCR (photo → solve):** reads the problem from an image with **Tesseract**
+(open, offline) and solves it. Closes the loop *see → solve → speak*.
+
+```bash
+pip install -r requirements-ocr.txt       # + tesseract binary (see the file)
+python -m src.mate --imagen problema.png
+#   OCR:    Deriva x*3*sen(x) respecto a x.
+#   ⚠ corr: Deriva x^3*sen(x) respecto a x.   ('*'→'^' heuristic; verify)
+#   =       x**3*cos(x) + 3*x**2*sin(x)
+```
+
+> Honest scope: OCR is reliable with **printed/typed** text; the `^` (exponent)
+> is often read as `*`, so a **visible** heuristic is applied and the read text is
+> always shown for you to verify. Handwriting and 2D notation aren't guaranteed.
+
 > **`eval()` safety:** the SymPy code is validated before running with an **AST
 > allow-list** (`src/sympy_solve.py`): any attribute access (`.__class__`…),
 > comprehensions, or names outside SymPy are rejected — the classic Python

@@ -86,6 +86,22 @@ python -m src.eval_sympy --modelo   # modelo neuronal → 99.1% (experimento)
 **📈 Gráficas:** `python -m src.mate --prompt "grafica x^2 - 4"` dibuja la
 función con matplotlib y marca las **raíces exactas** (calculadas por SymPy).
 
+**📷 OCR (foto → resuelve):** lee el enunciado desde una imagen con **Tesseract**
+(abierto, offline) y lo resuelve. Cierra el círculo *ver → resolver → hablar*.
+
+```bash
+pip install -r requirements-ocr.txt       # + binario tesseract (ver el archivo)
+python -m src.mate --imagen problema.png
+#   OCR:    Deriva x*3*sen(x) respecto a x.
+#   ⚠ corr: Deriva x^3*sen(x) respecto a x.   (heurística '*'→'^'; verifica)
+#   =       x**3*cos(x) + 3*x**2*sin(x)
+```
+
+> Alcance honesto: el OCR es fiable con texto **impreso/tipeado**; el `^`
+> (exponente) suele leerse como `*`, así que se aplica una heurística **visible**
+> y se muestra siempre lo leído para que lo verifiques. Manuscrito y notación 2D
+> no están garantizados.
+
 > **Seguridad del `eval()`:** el código SymPy se valida antes de ejecutarse con
 > una **lista blanca de AST** (`src/sympy_solve.py`): se rechaza cualquier acceso
 > a atributos (`.__class__`…), comprensiones o nombres fuera de SymPy — las vías
@@ -229,6 +245,7 @@ src/
   sympy_solve.py      motor SymPy exacto con sandbox por lista blanca de AST
   mate.py             Nivel 2: traduce→SymPy, resuelve exacto, y grafica
   grafica.py          gráficas con matplotlib (raíces exactas de SymPy)
+  ocr.py              lee un problema desde una foto (Tesseract, offline)
   eval_math.py        precisión de aritmética por operación
   eval_sympy.py       precisión NL→SymPy + solape train/test
   portable/           ◄ inferencia en NumPy puro (equipos viejos / IoT)

@@ -1,0 +1,7 @@
+# OCR local (leer un problema desde una foto): usa Tesseract (abierto, offline).
+# Requiere ADEMÁS el binario de Tesseract instalado en el sistema:
+#   macOS:  brew install tesseract tesseract-lang
+#   Ubuntu: sudo apt install tesseract-ocr tesseract-ocr-spa
+#   Windows: instalador de UB-Mannheim (github.com/UB-Mannheim/tesseract/wiki)
+pytesseract>=0.3.10
+Pillow>=10.0
