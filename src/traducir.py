@@ -25,18 +25,31 @@ def a_sympy(expr: str) -> str:
     return expr.strip()
 
 
-# (patrón, cómo construir el código SymPy). Reflejan las plantillas de gen_sympy.
+# (patrón, cómo construir el código SymPy). El ORDEN importa: los patrones más
+# específicos (integral definida, con variable) van antes que los generales.
+_VAR = r"([a-z])"  # variable de derivación/integración (x, y, z, t…)
+
 _PATRONES = [
-    (re.compile(r"^deriva\s+(.*?)\s+respecto\s+a\s+x\.?$", re.I | re.S),
-     lambda m: f"diff({a_sympy(m.group(1))}, x)"),
-    (re.compile(r"^integra\s+(.*?)\s+respecto\s+a\s+x\.?$", re.I | re.S),
-     lambda m: f"integrate({a_sympy(m.group(1))}, x)"),
+    # Integral DEFINIDA: "Integra x^2 respecto a x entre 0 y 1."
+    (re.compile(rf"^integra\s+(.*?)\s+respecto\s+a\s+{_VAR}\s+entre\s+(-?\d+)\s+y\s+(-?\d+)\.?$", re.I | re.S),
+     lambda m: f"integrate({a_sympy(m.group(1))}, ({m.group(2)}, {m.group(3)}, {m.group(4)}))"),
+    # Serie de Taylor: "Calcula la serie de Taylor de sen(x) en x = 0 hasta orden 5."
+    (re.compile(r"^calcula\s+la\s+serie\s+de\s+taylor\s+de\s+(.*?)\s+en\s+x\s*=\s*(-?\d+)\s+hasta\s+orden\s+(\d+)\.?$", re.I | re.S),
+     lambda m: f"series({a_sympy(m.group(1))}, x, {m.group(2)}, {m.group(3)})"),
+    # Derivada (parcial si la variable no es x): "Deriva x^2*y respecto a y."
+    (re.compile(rf"^deriva\s+(.*?)\s+respecto\s+a\s+{_VAR}\.?$", re.I | re.S),
+     lambda m: f"diff({a_sympy(m.group(1))}, {m.group(2)})"),
+    # Integral indefinida con variable: "Integra 3*cos(x) respecto a x."
+    (re.compile(rf"^integra\s+(.*?)\s+respecto\s+a\s+{_VAR}\.?$", re.I | re.S),
+     lambda m: f"integrate({a_sympy(m.group(1))}, {m.group(2)})"),
     (re.compile(r"^resuelve\s+la\s+ecuaci[oó]n\s+(.*?)\s*=\s*0\.?$", re.I | re.S),
      lambda m: f"solve(Eq({a_sympy(m.group(1))}, 0), x)"),
     (re.compile(r"^factoriza\s+(.*?)\.?$", re.I | re.S),
      lambda m: f"factor({a_sympy(m.group(1))})"),
     (re.compile(r"^expande\s+(.*?)\.?$", re.I | re.S),
      lambda m: f"expand({a_sympy(m.group(1))})"),
+    (re.compile(r"^simplifica\s+(.*?)\.?$", re.I | re.S),
+     lambda m: f"simplify({a_sympy(m.group(1))})"),
     (re.compile(r"^calcula\s+el\s+l[ií]mite\s+de\s+(.*?)\s+cuando\s+x\s+tiende\s+a\s+(-?\d+)\.?$", re.I | re.S),
      lambda m: f"limit({a_sympy(m.group(1))}, x, {m.group(2)})"),
 ]

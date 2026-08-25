@@ -48,8 +48,9 @@ python -m voz.talk --text "¿cuánto es 347 más 285?" --tts say
 
 Para cálculo/álgebra la respuesta debe ser **exacta**, así que no la calcula una
 red: el enunciado se **traduce** a una línea de código SymPy, y **SymPy resuelve
-exacto**. Derivadas, integrales, límites, ecuaciones, factorización… nivel UNI,
-100% local.
+exacto**. Derivadas (incl. parciales), integrales **definidas e indefinidas**,
+límites, ecuaciones, factorización, expansión, simplificación y **series de
+Taylor**… nivel UNI, 100% local.
 
 ```bash
 pip install -r requirements-mate.txt      # sympy, matplotlib

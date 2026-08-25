@@ -59,7 +59,10 @@ def resolver_problema(problema, m=None):
     else:
         code = traducir_reglas(problema)
         if code is None:
-            return None, "[enunciado no reconocido — prueba 'Deriva/Integra/Resuelve/Factoriza/Expande/Calcula el límite ...']"
+            return None, ("[enunciado no reconocido — prueba: Deriva … respecto a x/y · "
+                          "Integra … respecto a x [entre a y b] · Resuelve la ecuación … = 0 · "
+                          "Factoriza/Expande/Simplifica … · Calcula el límite de … cuando x tiende a p · "
+                          "Calcula la serie de Taylor de … en x = 0 hasta orden n]")
     return code, resolver_texto(code)
 
 

@@ -47,8 +47,9 @@ python -m voz.talk --text "how much is 347 plus 285?" --tts say
 
 For calculus/algebra the answer must be **exact**, so a neural net doesn't compute
 it: the problem is **translated** into one line of SymPy code, and **SymPy solves
-it exactly**. Derivatives, integrals, limits, equations, factoring… university
-level, 100% local.
+it exactly**. Derivatives (incl. partial), **definite and indefinite** integrals,
+limits, equations, factoring, expansion, simplification and **Taylor series**…
+university level, 100% local.
 
 ```bash
 pip install -r requirements-mate.txt      # sympy, matplotlib

@@ -12,7 +12,24 @@ CASOS = [
     ("Factoriza x^2 - 9.", "factor(x**2 - 9)"),
     ("Expande (x + 2)*(x + 3).", "expand((x + 2)*(x + 3))"),
     ("Calcula el límite de sen(x)/x cuando x tiende a 0.", "limit(sin(x)/x, x, 0)"),
+    # Nivel UNI ampliado:
+    ("Integra x^2 respecto a x entre 0 y 1.", "integrate(x**2, (x, 0, 1))"),
+    ("Deriva x^2*y respecto a y.", "diff(x**2*y, y)"),
+    ("Calcula la serie de Taylor de sen(x) en x = 0 hasta orden 5.", "series(sin(x), x, 0, 5)"),
+    ("Simplifica sen(x)^2 + cos(x)^2.", "simplify(sin(x)**2 + cos(x)**2)"),
 ]
+
+# Operación → resultado exacto esperado (comprueba todo el pipeline UNI).
+RESULTADOS_UNI = [
+    ("Integra x^2 respecto a x entre 0 y 1.", "1/3"),
+    ("Deriva x^2*y respecto a y.", "x**2"),
+    ("Simplifica sen(x)^2 + cos(x)^2.", "1"),
+]
+
+
+@pytest.mark.parametrize("enunciado,esperado", RESULTADOS_UNI)
+def test_resultado_uni_exacto(enunciado, esperado):
+    assert resolver_texto(traducir(enunciado)) == esperado
 
 
 @pytest.mark.parametrize("enunciado,esperado", CASOS)
