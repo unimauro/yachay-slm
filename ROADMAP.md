@@ -14,10 +14,12 @@ el proyecto avanza en dos caminos complementarios:
 - 🌱 **Yachay-Nano** (`src/`, `rust/`) — modelo **desde cero**, propio y diminuto
   (~1–7M). Domina un **nicho** acotado y cabe en el hardware más chico (IoT,
   microcontroladores, PCs antiguas). **Primer modelo real:** Nano de matemática,
-  **91.5%** de precisión con 0.87M params, datos 100% autogenerados
-  (`models/nano-math/`). **Nivel 2 (mate UNI):** el Nano traduce a SymPy y este
-  calcula exacto — **97.3%** de respuestas correctas (`models/nano-sympy/`).
-  Además: capa de **voz** (Whisper + Piper) para escuchar y hablar (`voz/`).
+  **91.3%** de precisión (test held-out de 2000, 0.87M params), datos 100%
+  autogenerados (`models/nano-math/`). **Nivel 2 (mate UNI):** el enunciado se
+  traduce a SymPy y este calcula exacto. La traducción la hace **mejor una regla
+  determinista (100%, `src/traducir.py`)** que el modelo neuronal (99.1%, un
+  experimento honesto que se conserva pero no supera al regex). Además: capa de
+  **voz** (Whisper + Piper) y **gráficas** (matplotlib) — ver README.
 - 🧠 **Yachay-General** (`finetune/`) — **afinar** (LoRA) un modelo chico
   preentrenado (Qwen2.5-0.5B). Multifuncional de verdad, corre en Raspberry Pi /
   PC vieja. Sigue siendo abierto y tuyo, pero no «desde cero».
@@ -30,8 +32,8 @@ Leyenda: ✅ hecho · 🔨 en curso · 🔭 horizonte · dificultad 🟢 baja / 
 |---|------|--------|-----|------------|
 | 0 | Prueba de concepto | ✅ | nanoGPT en MLX, tokenizer BPE, destilación, demo que aprende | tokenizer + modelo diminuto + demo offline sin API key 🟢 |
 | 1 | Portabilidad on-device | ✅ | inferencia en NumPy puro y binario Rust, sin MLX/GPU | paridad MLX↔NumPy↔Rust, diff de logits ~1e-6 🟡 |
-| 2 | Asistente general (fine-tune) | ✅ | LoRA sobre Qwen2.5-0.5B con datos en español | val loss 2.81 → 1.28 · ~1 GB RAM · adapter 5.6 MB 🟡 |
-| 3 | Hardware viejo, de verdad | 🔨 | fusionar adapter + GGUF 4-bit + llama.cpp en Raspberry Pi/RK3588 | ~350 MB · cross-compile ARM · guía de despliegue 🟡 |
+| 2 | Asistente general (fine-tune) | ✅ | LoRA sobre Qwen2.5-0.5B con datos en español | adapter 5.6 MB · ~1 GB RAM · (val loss indicativa, sin log versionado aún) 🟡 |
+| 3 | Hardware viejo, de verdad | 🔭 | fusionar adapter + GGUF 4-bit + llama.cpp en Raspberry Pi/RK3588 | ~350 MB (objetivo) · cross-compile ARM · guía de despliegue 🟡 |
 | 4 | Datos de dominio | 🔭 | destilación dirigida + datasets HF por dominio (STEM, legal, etc.) | un juguete = un dominio · calidad alta donde importa 🟡 |
 | 5 | Aplicaciones con RAG local | 🔭 | extensión de Chrome + add-in de Office con **RAG local** sobre tus documentos, 100% en tu máquina | índice local · privacidad total · asistente sobre tu propia info 🟡 |
 | 6 | Comunidad y registro | 🔭 | aportes de datos de la comunidad → reentrenar barato → redistribuir | datos comunitarios → modelo mejorado, publicado en registro abierto 🟢 |
@@ -51,8 +53,9 @@ respuestas. Aterrizado del más barato al más ambicioso:
    **controlada** (un coordinador orquesta, los nodos aportan cómputo). Como
    Napster compartía archivos, pero para entrenar un LLM abierto.
 
-**Honestidad de alcance:** la fase 4 es la más difícil (investigación pura), pero
-**ya se ha hecho** — *hivemind / DiLoCo*, *Petals* (inferencia distribuida),
+**Honestidad de alcance:** el punto 4 de arriba (entrenamiento descentralizado)
+es el más difícil (investigación pura), pero **ya se ha hecho** — *hivemind /
+DiLoCo*, *Petals* (inferencia distribuida),
 *INTELLECT-1* (entrenado de forma descentralizada). Es un precedente honesto, no
 una promesa. Para SLMs diminutos aporta poco (corren enteros en una máquina
 chica); tiene sentido cuando el modelo crece. El valor que sí llega **pronto** es

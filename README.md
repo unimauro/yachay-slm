@@ -1,6 +1,6 @@
 # Yachay SLM — un modelo de lenguaje pequeño, propio, desde cero
 
-> *Yachay* = "conocimiento / aprender" (quechua).
+> *Yachay* = "conocimiento / aprender" (quechua). · 🌐 **[English README](README.en.md)**
 
 Entrena un **Small Language Model (SLM) desde cero** en tu laptop, y **córrelo
 en cualquier equipo** — incluidos **equipos viejos e IoT** (Raspberry Pi, x86
@@ -10,13 +10,14 @@ MLX, sin PyTorch.
 No busca competir con GPT. Busca un modelo **propio, abierto, chico y
 ejecutable on-device**. Soberanía, privacidad y costo — no ranking.
 
-📍 **Roadmap del proyecto:** [sitio web](https://unimauro.github.io/yachay-slm/) · [ROADMAP.md](ROADMAP.md)
+📍 **Roadmap:** [sitio web](https://unimauro.github.io/yachay-slm/) · [ROADMAP.md](ROADMAP.md)
 
 ### 🌱 Primer modelo 100% propio: Yachay-Nano de matemática
 
 Un modelo **desde cero, soberano** (arquitectura propia + datos generados por
-código, sin Qwen ni GPT), que hace **aritmética al 91.5%** con solo **0.87M
-parámetros** y corre en cualquier CPU:
+código, sin Qwen ni GPT) que hace **aritmética** con solo **0.87M parámetros** y
+corre en cualquier CPU. Este sí **calcula** de verdad (aprende a sumar/multiplicar
+dígito a dígito — algo que una regla fija no hace):
 
 ```bash
 python -m src.portable.run --ckpt models/nano-math/yachay-math.safetensors \
@@ -25,11 +26,17 @@ python -m src.portable.run --ckpt models/nano-math/yachay-math.safetensors \
 #   347 + 285 = 632.
 ```
 
-Precisión en test held-out (números nunca vistos): **suma 94% · división 96% ·
-multiplicación 92% · resta 85%**. Reproducible: `src/gen_math.py` (datos) +
-`src/train.py` + `src/eval_math.py`. Es el primer ladrillo del track Nano.
+**Precisión honesta**, medida sobre el test held-out **completo de 2000
+problemas** (números nunca vistos), reproducible con `src/eval_math.py`:
 
-**🎙️ Con voz (escuchar + hablar):** conecta piezas locales al cerebro —
+| global | suma | división | multiplicación | resta |
+|:---:|:---:|:---:|:---:|:---:|
+| **91.3%** | 94.5% | 93.9% | 91.5% | 85.7% |
+
+Reproducible: `src/gen_math.py` (datos) + `src/train.py` + `src/eval_math.py`.
+Es el primer ladrillo del track Nano.
+
+**🎙️ Con voz (escuchar + hablar):** piezas locales conectadas al cerebro —
 Whisper (STT) + Piper/`say` (TTS). Un tutor que oye la pregunta y responde
 hablando, todo on-device. Ver **[voz/README.md](voz/README.md)**.
 
@@ -39,22 +46,49 @@ python -m voz.talk --text "¿cuánto es 347 más 285?" --tts say
 
 ### 🎓 Nivel 2 — matemática universitaria EXACTA (traduce → SymPy)
 
-Para cálculo/álgebra el modelo **no calcula** (un modelo chico no puede) — el
-modelo **traduce** el problema a código SymPy, y **SymPy lo resuelve exacto**.
-Derivadas, integrales, límites, ecuaciones, factorización… nivel UNI, 100% local.
+Para cálculo/álgebra la respuesta debe ser **exacta**, así que no la calcula una
+red: el enunciado se **traduce** a una línea de código SymPy, y **SymPy resuelve
+exacto**. Derivadas, integrales, límites, ecuaciones, factorización… nivel UNI,
+100% local.
 
 ```bash
-pip install -r requirements-mate.txt      # sympy
+pip install -r requirements-mate.txt      # sympy, matplotlib
 python -m src.mate --prompt "Deriva x^3*sen(x) respecto a x."
-#   SymPy:  diff(x**3*sin(x), x)
+#   SymPy:  diff(x**3*sin(x),x)
 #   =       x**3*cos(x) + 3*x**2*sin(x)
 python -m src.mate --chat
 ```
 
-**97.3%** de respuestas exactas en test held-out. El modelo traductor es tuyo
-(`models/nano-sympy/`, 0.87M params); el cálculo lo hace SymPy (exacto siempre).
-Es el patrón "cerebro chico + herramienta abierta" — la vía realista y soberana
-para llegar a nivel universitario.
+**Sobre la traducción — honestidad ganada en una auditoría adversarial.** Esta
+tarea (enunciado → una línea de SymPy) es una transformación de texto casi
+biyectiva. Un **traductor determinista** de ~40 líneas (`src/traducir.py`,
+reglas + regex) la resuelve al **100.0%** en el test y **nunca alucina** — es el
+camino **por defecto** de `src.mate`.
+
+Entrenamos además un **modelo neuronal** de 0.87M para la misma tarea
+(`models/nano-sympy/`). Es un **experimento honesto**: llega al **99.1%** pero
+**no supera** al traductor determinista, y falla justo donde haría falta
+"entender" (p. ej. el límite clásico `sen(x)/x`, donde alucina). Se mantiene y
+se puede probar con `--modelo`, pero **no lo vendemos como "el modelo aprendió
+matemática"**: el logro real es el patrón **traductor + herramienta exacta**.
+
+```bash
+python -m src.eval_sympy            # traductor determinista → 100.0%
+python -m src.eval_sympy --modelo   # modelo neuronal → 99.1% (experimento)
+```
+
+> El evaluador también reporta el **solape train/test** (≈68% de los pares del
+> test aparecen en el train: el espacio generable es pequeño). El traductor
+> determinista no entrena, así que no le afecta; para el modelo neuronal, ese %
+> de la métrica es memorización, no generalización. Lo decimos abiertamente.
+
+**📈 Gráficas:** `python -m src.mate --prompt "grafica x^2 - 4"` dibuja la
+función con matplotlib y marca las **raíces exactas** (calculadas por SymPy).
+
+> **Seguridad del `eval()`:** el código SymPy se valida antes de ejecutarse con
+> una **lista blanca de AST** (`src/sympy_solve.py`): se rechaza cualquier acceso
+> a atributos (`.__class__`…), comprensiones o nombres fuera de SymPy — las vías
+> del escape clásico de sandboxes en Python. Verificado contra payloads de RCE.
 
 ```
 Entrenas en Mac (rápido, con MLX)  ──►  .safetensors  ──►  corre en cualquier CPU (NumPy)
@@ -63,8 +97,8 @@ Entrenas en Mac (rápido, con MLX)  ──►  .safetensors  ──►  corre en
 
 ## Empezar en 2 minutos
 
-> 🖥️ **¿Windows, Linux o macOS?** Guía de instalación por sistema operativo en
-> **[RUN.md](RUN.md)** (ejecutar funciona en los tres; entrenar es solo Mac).
+> 🖥️ **¿Windows, Linux o macOS?** Guía por sistema operativo en **[RUN.md](RUN.md)**
+> (ejecutar funciona en los tres; entrenar es solo Mac Apple Silicon).
 
 ### A) Solo probar el modelo demo incluido (cualquier equipo, sin GPU)
 
@@ -88,7 +122,7 @@ python -m src.portable.run --prompt "¿por qué el cielo es azul?"
 
 > El demo es un modelo **diminuto** (~1M parámetros) entrenado sobre pocos
 > ejemplos: sirve para ver que el pipeline funciona, no para respuestas serias.
-> Entrena el tuyo con tus datos ↓
+> Un modelo diminuto desde cero **habla pero no sabe**. Entrena el tuyo ↓
 
 ### B) Entrenar tu propio modelo desde cero (Mac Apple Silicon)
 
@@ -115,13 +149,12 @@ desde cero" no coexisten — es física del modelo):
 
 | Track | Qué es | Para qué | Calidad |
 |---|---|---|---|
-| 🌱 **Yachay-Nano** (`src/`) | modelo **desde cero**, propio y diminuto | IoT chico / juguetes de **nicho** | domina un dominio acotado |
+| 🌱 **Yachay-Nano** (`src/`) | modelo **desde cero**, propio y diminuto | IoT chico / juguetes de **nicho** | domina un dominio acotado (mate 91.3%) |
 | 🧠 **Yachay-General** (`finetune/`) | **afinar** (LoRA) un modelo chico preentrenado (Qwen2.5-0.5B) | asistente **general** en Raspberry Pi / PC vieja | multifuncional, útil de verdad |
 
-Un modelo diminuto desde cero **habla pero no sabe** (aprende gramática, no
-hechos). Para un asistente general con pocos parámetros, la ruta realista es
-**partir de un preentrenado y afinarlo** — sigue siendo abierto y tuyo, corre en
-hardware modesto, pero ya no es "desde cero". Ver **[finetune/README.md](finetune/README.md)**.
+Para un asistente general con pocos parámetros, la ruta realista es **partir de
+un preentrenado y afinarlo** — sigue siendo abierto y tuyo, corre en hardware
+modesto, pero ya no es "desde cero". Ver **[finetune/README.md](finetune/README.md)**.
 
 ## La "capa para equipos viejos" (portabilidad)
 
@@ -132,11 +165,9 @@ los mismos pesos `.safetensors`. Solo depende de `numpy`, `safetensors` y
 
 - Corre en **cualquier CPU**: Raspberry Pi, PCs viejas, ARM Linux, RK3588…
 - Sin GPU, sin CUDA, sin MLX, sin PyTorch.
-- Está **verificado**: los logits del motor NumPy coinciden con los de MLX
-  (`make test` / `scripts/check_parity.py`, diff ~1e-6).
-
-Así puedes entrenar en una Mac y desplegar el cerebro en un juguete educativo o
-un equipo reciclado.
+- **Verificado**: los logits del motor NumPy coinciden con los de MLX y con el
+  binario Rust. El diff medido es **~6–8e-6** (`scripts/check_parity.py` y
+  `scripts/check_parity_rust.py`); nota que el binario Rust imprime 6 decimales.
 
 ### Rust: el binario para el dispositivo (aún más liviano)
 
@@ -159,8 +190,7 @@ en el hardware chico.
 ## Estrategia de datos: destilación
 
 El demo entrena con los datos de `data/samples/general.jsonl` (incluidos, sin
-API). Para datos propios a escala, un LLM *teacher* genera un dataset curado del
-dominio que quieras:
+API). Para datos propios a escala, un LLM *teacher* genera un dataset curado:
 
 ```bash
 export OPENROUTER_API_KEY=...        # o TEACHER_BASE_URL + TEACHER_TOKEN (gateway propio)
@@ -170,9 +200,11 @@ python -m src.tokenizer --entrena data/distill/stem.jsonl
 python -m src.train --datos data/distill/stem.jsonl --preset micro
 ```
 
-Es destilación por **datos sintéticos** (el teacher produce pares
-instrucción→respuesta; el student entrena sobre eso). La destilación por
-*logits/soft-labels* queda para después.
+> **Licencia de los datos:** el código es MIT, pero **los datos no todos**. Los
+> de `nano-math`/`nano-sympy` son 100% autogenerados (MIT). Si además destilas o
+> descargas datos de terceros (p. ej. Alpaca en `data/distill/`, que está
+> **gitignoreado y no se versiona**), respeta su licencia — ver
+> **[data/README.md](data/README.md)**.
 
 ## Presets (escalar con calma)
 
@@ -182,46 +214,42 @@ instrucción→respuesta; el student entrena sobre eso). La destilación por
 | `micro` | 256 | 6 | 256 | ~5M   | laptop |
 | `mini`  | 512 | 8 | 512 | ~25M  | ya pide GPU |
 
-Empieza en `nano` hasta que el pipeline funcione end-to-end; escala solo cuando
-lo justifique.
-
 ## Estructura
 
 ```
 src/
   config.py           config del modelo + presets (nano/micro/mini)
   model.py            nanoGPT en MLX (entrenamiento)
-  tokenizer.py        BPE propio (vocab chico, byte-level)
-  distill.py          genera dataset destilando de un teacher (OpenRouter/gateway)
+  tokenizer.py        BPE propio (vocab chico, byte-level, dígitos separables)
   train.py            loop de entrenamiento (MLX); guarda .safetensors + config .json
-  generate.py         generación con MLX
+  gen_math.py         genera datos de aritmética (soberanos, por código)
+  gen_sympy.py        genera pares enunciado→código SymPy
+  traducir.py         ◄ traductor DETERMINISTA español→SymPy (por defecto en mate)
+  sympy_solve.py      motor SymPy exacto con sandbox por lista blanca de AST
+  mate.py             Nivel 2: traduce→SymPy, resuelve exacto, y grafica
+  grafica.py          gráficas con matplotlib (raíces exactas de SymPy)
+  eval_math.py        precisión de aritmética por operación
+  eval_sympy.py       precisión NL→SymPy + solape train/test
   portable/           ◄ inferencia en NumPy puro (equipos viejos / IoT)
-    engine.py         forward + muestreo, carga .safetensors sin MLX
-    run.py            CLI: --prompt / --chat
-data/samples/         datos de ejemplo (demo sin API)
-models/demo/          modelo demo pre-entrenado (clonar y correr)
-scripts/check_parity.py   verifica NumPy == MLX
-notes/arquitectura.md     decisiones de arquitectura
+voz/                  escuchar (Whisper) + hablar (Piper/say)
+rust/                 binario de inferencia en Rust puro (sin Python)
+models/               demo + nano-math + nano-sympy (clonar y correr)
+finetune/             LoRA sobre Qwen2.5-0.5B (track General)
+scripts/check_parity*.py  verifican NumPy == MLX == Rust
 ```
 
 ## Alcance honesto (anti-overclaiming)
 
 - SLM de **dominio estrecho** o corpus chico: **viable** desde cero en laptop.
-  Un modelo general tipo GPT: **no**.
-- El valor real: dueño del modelo, corre en infra chica / hardware embebido.
+  Un modelo general tipo GPT desde cero: **no**.
+- El nano-math **sí calcula** aritmética (91.3%). El nano-sympy **no "entiende"
+  matemática**: la traducción la hace mejor una regla determinista, y así lo
+  reportamos. El valor está en el sistema (cerebro chico + herramienta exacta).
+- Los números publicados se reproducen con los scripts de `eval_*`; la paridad
+  medida es ~6–8e-6, no un gate de 1e-6.
 - Aspiración: estar entre los primeros SLM open source hechos en Perú. Antes de
-  decir "el primero" en público: verificar. Plantearlo como pionero.
-
-## Ruta por fases
-
-| Fase | Dónde | Qué |
-|---|---|---|
-| **1. PoC** ✅ | laptop (MLX) | tokenizer + nanoGPT + destilación + entrenar y ver que aprende |
-| **1b. Portátil** ✅ | cualquier CPU | motor NumPy, correr sin MLX (equipos viejos / IoT) |
-| **4. On-device** ✅ | Rust puro (`rust/`) | binario nativo sin Python; paridad verificada; cross-compila a ARM |
-| 2. Escala | GPU alquilada (si el PoC lo justifica) | más datos, más parámetros |
-| 3. Cuantizar | laptop / Rust | int8 / 4-bit para inferencia aún más liviana |
+  decir "el primero" en público: verificar. Se plantea como pionero, no líder.
 
 ## Licencia
 
-MIT — ver [LICENSE](LICENSE). Úsalo, modifícalo y compártelo libremente.
+Código bajo **MIT** — ver [LICENSE](LICENSE). Datos: ver [data/README.md](data/README.md).
