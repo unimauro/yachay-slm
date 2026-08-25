@@ -374,7 +374,7 @@
 <div class="statsband">
   <div class="wrap stats">
     <div class="stat" data-reveal><div class="v">~1e-6</div><div class="l" data-i18n="stat1_l">paridad MLX↔NumPy↔Rust</div></div>
-    <div class="stat" data-reveal><div class="v">~350 MB</div><div class="l" data-i18n="stat2_l">modelo general en 4-bit</div></div>
+    <div class="stat" data-reveal><div class="v">91.3%</div><div class="l" data-i18n="stat2_l">aritmética Nano · desde cero</div></div>
     <div class="stat" data-reveal><div class="v">0</div><div class="l" data-i18n="stat3_l">dependencia de la nube</div></div>
     <div class="stat" data-reveal><div class="v">MIT</div><div class="l" data-i18n="stat4_l">abierto de verdad</div></div>
   </div>
@@ -402,6 +402,7 @@
           <li data-i18n="trackA_li1">nanoGPT entrenado en MLX</li>
           <li data-i18n="trackA_li2">Inferencia en NumPy puro y en Rust nativo</li>
           <li data-i18n="trackA_li3">Para microcontroladores y juguetes de propósito único</li>
+          <li data-i18n="trackA_li4"><b>Ya real:</b> mate desde cero (aritmética 91.3%), cálculo UNI exacto (→ SymPy), voz (Whisper + Piper) y gráficas</li>
         </ul>
       </div>
       <div class="track general" data-reveal>
@@ -464,7 +465,7 @@
       <div class="phase active" data-reveal>
         <span class="node"><i></i></span>
         <div class="card">
-          <div class="row"><span class="num"><span data-i18n="ph">FASE</span> 3</span><h3 data-i18n="p3_t">Hardware viejo, de verdad</h3><span class="status" data-i18n="legend_active">En curso</span></div>
+          <div class="row"><span class="num"><span data-i18n="ph">FASE</span> 3</span><h3 data-i18n="p3_t">Hardware viejo, de verdad</h3><span class="status" data-i18n="legend_horizon">Horizonte</span></div>
           <p data-i18n="p3_d">Fusionar el adapter, cuantizar a GGUF 4-bit y correr con llama.cpp en Raspberry Pi / RK3588 / PC vieja. <span class="diff">🟡</span></p>
           <div class="deliver"><span class="k" data-i18n="k_goal">meta</span><span data-i18n="p3_k">~350 MB · cross-compile a ARM · guía reproducible de despliegue</span></div>
         </div>
@@ -614,7 +615,7 @@
       how_p:"“General + tiny + from scratch” can't coexist: it's model physics. So the project moves along two complementary paths.",
       trackA_tag:"Track A · sovereign",
       trackA_p:"A model <b>from scratch</b>, your own and tiny (~1–7M params). It speaks the language of a narrow <b>niche</b> and fits the smallest hardware.",
-      trackA_li1:"nanoGPT trained in MLX", trackA_li2:"Inference in pure NumPy and native Rust", trackA_li3:"For microcontrollers and single-purpose toys",
+      trackA_li1:"nanoGPT trained in MLX", trackA_li2:"Inference in pure NumPy and native Rust", trackA_li3:"For microcontrollers and single-purpose toys", trackA_li4:"<b>Already real:</b> math from scratch (91.3% arithmetic), exact university calculus (→ SymPy), voice (Whisper + Piper) and plots",
       trackB_tag:"Track B · useful now",
       trackB_p:"Fine-tune (LoRA) a small <b>pretrained</b> model (Qwen2.5-0.5B). Truly multi-purpose, runs on a Raspberry Pi or old PC.",
       trackB_li1:"Fine-tuning on your Mac with mlx-lm", trackB_li2:"Export to 4-bit GGUF (~350 MB) for llama.cpp", trackB_li3:"Still open and yours — but not “from scratch”",
@@ -648,7 +649,7 @@
       meta_license:"MIT license", meta_made:"Made in Peru 🇵🇪",
       nav_why:"Why", nav_tracks:"Tracks", nav_roadmap:"Roadmap", nav_vision:"Vision", nav_contact:"Contact",
       cta_try:"Try it in 2 min →", cta_repo:"View on GitHub ↗",
-      stat1_l:"parity MLX↔NumPy↔Rust", stat2_l:"general model in 4-bit", stat3_l:"cloud dependency", stat4_l:"truly open"
+      stat1_l:"parity MLX↔NumPy↔Rust", stat2_l:"Nano arithmetic · from scratch", stat3_l:"cloud dependency", stat4_l:"truly open"
     },
     zh:{
       qu_note:"克丘亚语翻译进行中 —— 欢迎帮助改进。",
@@ -662,7 +663,7 @@
       how_p:"«通用 + 微型 + 从零» 无法共存：这是模型的物理规律。因此项目沿两条互补的路线推进。",
       trackA_tag:"路线 A · 主权",
       trackA_p:"一个<b>从零构建</b>、完全属于你的微型模型（约 1–7M 参数）。它精通一个狭窄的<b>细分领域</b>，能装进最小的硬件。",
-      trackA_li1:"用 MLX 训练的 nanoGPT", trackA_li2:"纯 NumPy 与原生 Rust 推理", trackA_li3:"面向单片机和单一用途玩具",
+      trackA_li1:"用 MLX 训练的 nanoGPT", trackA_li2:"纯 NumPy 与原生 Rust 推理", trackA_li3:"面向单片机和单一用途玩具", trackA_li4:"<b>已实现：</b>从零开始的数学（算术 91.3%）、精确的大学微积分（→ SymPy）、语音（Whisper + Piper）与绘图",
       trackB_tag:"路线 B · 立即可用",
       trackB_p:"对一个小型<b>预训练</b>模型（Qwen2.5-0.5B）做 LoRA 微调。真正多功能，可在树莓派或旧电脑上运行。",
       trackB_li1:"在你的 Mac 上用 mlx-lm 微调", trackB_li2:"导出为 4-bit GGUF（约 350 MB）供 llama.cpp 使用", trackB_li3:"依然开源且属于你——但不是«从零»",
@@ -696,7 +697,7 @@
       meta_license:"MIT 许可", meta_made:"秘鲁制造 🇵🇪",
       nav_why:"为什么", nav_tracks:"路线", nav_roadmap:"路线图", nav_vision:"愿景", nav_contact:"联系",
       cta_try:"2 分钟试用 →", cta_repo:"在 GitHub 查看 ↗",
-      stat1_l:"MLX↔NumPy↔Rust 一致", stat2_l:"4-bit 通用模型", stat3_l:"云依赖", stat4_l:"真正开源"
+      stat1_l:"MLX↔NumPy↔Rust 一致", stat2_l:"Nano 算术 · 从零开始", stat3_l:"云依赖", stat4_l:"真正开源"
     },
     pt:{
       qu_note:"Tradução para o quíchua em andamento — ajude a melhorar.",
@@ -710,7 +711,7 @@
       how_p:"«Geral + minúsculo + do zero» não coexistem: é física do modelo. Por isso o projeto avança em dois caminhos complementares.",
       trackA_tag:"Trilha A · soberana",
       trackA_p:"Um modelo <b>do zero</b>, próprio e minúsculo (~1–7M parâmetros). Fala a língua de um <b>nicho</b> restrito e cabe no hardware mais pequeno.",
-      trackA_li1:"nanoGPT treinado em MLX", trackA_li2:"Inferência em NumPy puro e Rust nativo", trackA_li3:"Para microcontroladores e brinquedos de propósito único",
+      trackA_li1:"nanoGPT treinado em MLX", trackA_li2:"Inferência em NumPy puro e Rust nativo", trackA_li3:"Para microcontroladores e brinquedos de propósito único", trackA_li4:"<b>Já real:</b> matemática do zero (aritmética 91.3%), cálculo universitário exato (→ SymPy), voz (Whisper + Piper) e gráficos",
       trackB_tag:"Trilha B · útil já",
       trackB_p:"Afinar (LoRA) um modelo pequeno <b>já pré-treinado</b> (Qwen2.5-0.5B). Multifuncional de verdade, roda numa Raspberry Pi ou PC velho.",
       trackB_li1:"Fine-tuning no seu Mac com mlx-lm", trackB_li2:"Exportar para GGUF 4-bit (~350 MB) para llama.cpp", trackB_li3:"Continua aberto e seu — mas não «do zero»",
@@ -744,7 +745,7 @@
       meta_license:"Licença MIT", meta_made:"Feito no Peru 🇵🇪",
       nav_why:"Por quê", nav_tracks:"Trilhas", nav_roadmap:"Roadmap", nav_vision:"Visão", nav_contact:"Contato",
       cta_try:"Experimente em 2 min →", cta_repo:"Ver no GitHub ↗",
-      stat1_l:"paridade MLX↔NumPy↔Rust", stat2_l:"modelo geral em 4-bit", stat3_l:"dependência da nuvem", stat4_l:"realmente aberto"
+      stat1_l:"paridade MLX↔NumPy↔Rust", stat2_l:"aritmética Nano · do zero", stat3_l:"dependência da nuvem", stat4_l:"realmente aberto"
     },
     qu:{
       qu_note:"Kay t'ikray runasimiman llamk'ashallanraqmi ✍️ — yanapaykuwaychis allinchayta.",
