@@ -35,7 +35,7 @@ def tipo(respuesta):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--ckpt", default="checkpoints/yachay-math.safetensors")
+    ap.add_argument("--ckpt", default="models/nano-math/yachay-math.safetensors")
     ap.add_argument("--test", default="data/nano/math_test.jsonl")
     ap.add_argument("--n", type=int, default=400, help="cuántos problemas evaluar")
     args = ap.parse_args()

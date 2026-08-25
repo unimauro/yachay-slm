@@ -156,4 +156,13 @@ def cargar(ckpt="checkpoints/yachay.safetensors", cfg_path=None, tokenizer_path=
     if tokenizer_path is None:
         tokenizer_path = meta.get("tokenizer", "tokenizer.json")
     tok = TokenizerBPE.cargar(tokenizer_path)
+
+    # Guard: modelo y tokenizer deben tener el mismo vocab, o el muestreo genera
+    # ids fuera del embedding y NumPy revienta con un IndexError críptico.
+    n_emb = weights["tok_emb.weight"].shape[0]
+    if tok.vocab_size != n_emb:
+        raise ValueError(
+            f"tokenizer vocab {tok.vocab_size} != modelo {n_emb}. "
+            f"Revisa el campo 'tokenizer' en {cfg_path} (apunta a {tokenizer_path})."
+        )
     return GPTNumpy(weights, cfg, tok)
