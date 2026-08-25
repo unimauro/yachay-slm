@@ -24,7 +24,7 @@ jobs:
           pip install -r requirements-mate.txt
           pip install pytest
       - name: Tests (motor NumPy, sandbox SymPy, traductor)
-        run: pytest tests/ -q
+        run: python -m pytest tests/ -q
       - name: Smoke — inferencia portable con el modelo demo
         run: python -m src.portable.run --ckpt models/demo/yachay-demo.safetensors --prompt "hola"
       - name: Smoke — mate determinista → SymPy
