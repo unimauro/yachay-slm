@@ -15,6 +15,18 @@ from .portable import cargar
 from .sympy_solve import resolver_texto
 
 MODELO = "models/nano-sympy/yachay-sympy.safetensors"
+GRAFICA_VERBOS = ("grafica", "gráfica", "graficar", "grafícame", "dibuja", "traza", "plot", "grafic")
+
+
+def _es_grafica(texto):
+    p = texto.strip().lower()
+    return any(p.startswith(v) for v in GRAFICA_VERBOS)
+
+
+def _a_sympy(expr):
+    """Notación 'de estudiante' -> SymPy: ^->**, sen->sin, ln->log, · -> *."""
+    return (expr.replace("^", "**").replace("·", "*")
+            .replace("sen", "sin").replace("raíz", "sqrt"))
 
 
 def traducir(m, problema):
@@ -28,6 +40,19 @@ def traducir(m, problema):
 
 
 def resolver_problema(m, problema):
+    # ¿pide una gráfica? -> matplotlib (local, exacto), sin pasar por el modelo
+    if _es_grafica(problema):
+        expr = problema.strip()
+        for v in GRAFICA_VERBOS:
+            if expr.lower().startswith(v):
+                expr = expr[len(v):]
+                break
+        for filler in ("la función", "la funcion", "la gráfica de", "y =", "y=", ":"):
+            expr = expr.replace(filler, "")
+        expr = _a_sympy(expr.strip(" ¿?."))
+        from .grafica import graficar
+        ruta = graficar(expr, salida="grafica.png")
+        return f"plot({expr})", f"gráfica guardada en {ruta}"
     code = traducir(m, problema)
     return code, resolver_texto(code)
 

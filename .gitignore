@@ -21,3 +21,7 @@ finetune/yachay-general/
 
 # El modelo demo SÍ se versiona (para "clonar y correr"):
 !models/demo/
+
+# Gráficas generadas (regenerables)
+grafica.png
+*.grafica.png

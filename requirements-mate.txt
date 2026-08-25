@@ -1,2 +1,4 @@
-# Nivel 2 (mate UNI exacta): el modelo traduce y SymPy calcula.
+# Nivel 2 (mate UNI exacta) + graficas: el modelo traduce, SymPy calcula, matplotlib dibuja.
 sympy>=1.12
+matplotlib>=3.7
+numpy>=1.24
