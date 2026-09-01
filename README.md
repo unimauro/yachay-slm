@@ -12,6 +12,29 @@ ejecutable on-device**. Soberanía, privacidad y costo — no ranking.
 
 📍 **Roadmap:** [sitio web](https://unimauro.github.io/yachay-slm/) · [ROADMAP.md](ROADMAP.md)
 
+## ⚡ Usarlo ahora mismo (sin entrenar nada)
+
+Clona, instala una vez y prueba. Los modelos ya vienen en `models/` — **no hay
+que descargar pesos ni pedir API key**.
+
+```bash
+git clone https://github.com/unimauro/yachay-slm.git && cd yachay-slm
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements-portable.txt          # numpy, safetensors, tokenizers
+```
+
+| Quiero… | Comando | Necesita |
+|---|---|---|
+| 💬 **Chatear** con el demo (cualquier CPU) | `python -m src.portable.run --chat` | portable |
+| ➕ **Aritmética** de verdad (91.3%) | `python -m src.portable.run --ckpt models/nano-math/yachay-math.safetensors --collapse-digits --chat` | portable |
+| 🎓 **Mate UNI exacta** (deriva, integra, límites…) | `python -m src.mate --chat` | `pip install -r requirements-mate.txt` |
+| 📈 **Graficar** una función | `python -m src.mate --prompt "grafica x^2 - 4"` | mate |
+| 📷 **Foto → resuelve** (OCR) | `python -m src.mate --imagen problema.png` | `pip install -r requirements-ocr.txt` + tesseract |
+| 🎙️ **Voz** (oír + hablar) | `python -m voz.talk --text "¿cuánto es 347 más 285?" --tts say` | ver [voz/README.md](voz/README.md) |
+
+> Escribe `salir` para salir de cualquier chat. Detalle por SO en
+> **[RUN.md](RUN.md)**. ¿Cómo funciona cada pieza? Sigue leyendo ↓
+
 ### 🌱 Primer modelo 100% propio: Yachay-Nano de matemática
 
 Un modelo **desde cero, soberano** (arquitectura propia + datos generados por

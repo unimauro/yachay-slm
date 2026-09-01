@@ -11,6 +11,29 @@ and runnable on-device**. Sovereignty, privacy and cost — not leaderboards.
 
 📍 **Roadmap:** [website](https://unimauro.github.io/yachay-slm/) · [ROADMAP.md](ROADMAP.md)
 
+## ⚡ Use it right now (no training needed)
+
+Clone, install once, try. The models already ship in `models/` — **no weight
+downloads, no API key**.
+
+```bash
+git clone https://github.com/unimauro/yachay-slm.git && cd yachay-slm
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements-portable.txt          # numpy, safetensors, tokenizers
+```
+
+| I want to… | Command | Needs |
+|---|---|---|
+| 💬 **Chat** with the demo (any CPU) | `python -m src.portable.run --chat` | portable |
+| ➕ **Real arithmetic** (91.3%) | `python -m src.portable.run --ckpt models/nano-math/yachay-math.safetensors --collapse-digits --chat` | portable |
+| 🎓 **Exact university math** (derive, integrate, limits…) | `python -m src.mate --chat` | `pip install -r requirements-mate.txt` |
+| 📈 **Plot** a function | `python -m src.mate --prompt "grafica x^2 - 4"` | mate |
+| 📷 **Photo → solve** (OCR) | `python -m src.mate --imagen problem.png` | `pip install -r requirements-ocr.txt` + tesseract |
+| 🎙️ **Voice** (listen + speak) | `python -m voz.talk --text "how much is 347 plus 285?" --tts say` | see [voz/README.md](voz/README.md) |
+
+> Type `salir` to leave any chat. Per-OS details in **[RUN.md](RUN.md)**. Want to
+> know how each piece works? Read on ↓
+
 ### 🌱 First 100%-own model: Yachay-Nano for math
 
 A **from-scratch, sovereign** model (own architecture + code-generated data, no

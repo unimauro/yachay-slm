@@ -25,13 +25,23 @@ def main():
                     help="une dígitos separados (para modelos de matemática)")
     args = ap.parse_args()
 
+    from src.portable import cargar
+
     ckpt = args.ckpt
     if not os.path.exists(ckpt) and os.path.exists(DEMO):
         print(f"[no encontré {ckpt}; uso el modelo demo incluido: {DEMO}]")
         ckpt = DEMO
 
-    from src.portable import cargar
-    m = cargar(ckpt)
+    try:
+        m = cargar(ckpt)
+    except Exception as e:
+        # Un checkpoint desajustado (p.ej. tokenizer con vocab distinto al del
+        # modelo) no debe romper la demo: caemos al modelo incluido que sí carga.
+        if ckpt != DEMO and os.path.exists(DEMO):
+            print(f"[{ckpt} no cargó ({e}); uso el modelo demo incluido: {DEMO}]")
+            m = cargar(DEMO)
+        else:
+            raise
     print(f"[modelo portátil cargado: {m.n_layers} capas, dim {m.dim}, "
           f"vocab {m.W['tok_emb.weight'].shape[0]} | NumPy puro]")
 
